@@ -1,0 +1,227 @@
+/* ------------------------------------------------------------------ */
+/* Hero — landing page                                                 */
+/* ------------------------------------------------------------------ */
+
+.hero {
+    padding: 5rem 2rem 4rem;
+    max-width: var(--max-width);
+    margin: 0 auto;
+    text-align: center;
+}
+
+.hero-inner {
+    max-width: 760px;
+    margin: 0 auto 3.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--accent-light);
+    color: var(--accent);
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0;
+    text-transform: none;
+    padding: 0.5rem 1.1rem;
+    border-radius: 999px;
+    margin-bottom: 2rem;
+}
+
+.hero-badge::before {
+    content: "";
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+}
+
+.hero-title {
+    font-family: var(--font-body);
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 600;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin-bottom: 1.5rem;
+}
+
+.hero-title .hero-title-accent {
+    display: block;
+    color: var(--accent);
+}
+
+.hero-subtitle {
+    font-size: 1.05rem;
+    color: var(--ink-muted);
+    line-height: 1.7;
+    max-width: 620px;
+    margin: 0 auto 2.25rem;
+}
+
+.hero-actions {
+    display: flex;
+    gap: 0.85rem;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero-visual {
+    display: flex;
+    justify-content: center;
+}
+
+.mock-card {
+    background: var(--paper-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem 1.75rem 1.75rem;
+    width: 100%;
+    max-width: 880px;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.06);
+}
+
+.mock-card-header {
+    display: flex;
+    gap: 0.4rem;
+    align-items: center;
+    margin-bottom: 1.25rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-soft);
+}
+
+.mock-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.mock-dot-1 { background: #f0a8a0; }
+.mock-dot-2 { background: #f3c969; }
+.mock-dot-3 { background: #a8d8c0; }
+
+.mock-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.mock-stat {
+    background: var(--paper-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 1.25rem 1.5rem;
+}
+
+.mock-stat-label {
+    font-size: 0.85rem;
+    color: var(--ink-muted);
+    margin-bottom: 0.5rem;
+}
+
+.mock-stat-value {
+    font-family: var(--font-body);
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1.1;
+    margin-bottom: 0.5rem;
+}
+
+.mock-stat-meta {
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.mock-stat-meta--up { color: var(--danger); }
+.mock-stat-meta--good { color: var(--accent); }
+.mock-stat-meta--muted { color: var(--ink-muted); font-weight: 400; }
+
+.mock-bars-card {
+    background: var(--paper-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 1.25rem 1.5rem;
+}
+
+.mock-bars { display: flex; flex-direction: column; gap: 0.85rem; }
+
+.mock-bar-row {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    align-items: center;
+    gap: 1rem;
+}
+
+.mock-cat {
+    font-size: 0.9rem;
+    color: var(--ink-soft);
+    text-align: right;
+}
+
+.mock-bar-track {
+    height: 6px;
+    background: var(--border-soft);
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.mock-bar {
+    height: 100%;
+    background: var(--accent);
+    border-radius: 999px;
+    transition: width 0.6s ease;
+}
+
+.mock-bar--food { background: #e8a44a; }
+.mock-bar--travel { background: #5b8ed6; }
+.mock-bar--bills { background: #9b7ec9; }
+
+/* ------------------------------------------------------------------ */
+/* Buttons (hero variant)                                              */
+/* ------------------------------------------------------------------ */
+
+.hero .btn-primary {
+    padding: 0.85rem 1.75rem;
+    font-size: 0.95rem;
+    font-weight: 500;
+}
+
+.hero .btn-ghost {
+    padding: 0.85rem 1.75rem;
+    font-size: 0.95rem;
+    font-weight: 500;
+    background: var(--ink);
+    color: var(--paper);
+    border: 1px solid var(--ink);
+}
+
+.hero .btn-ghost:hover {
+    background: var(--accent);
+    color: var(--paper);
+    border-color: var(--accent);
+}
+
+/* ------------------------------------------------------------------ */
+/* Responsive                                                          */
+/* ------------------------------------------------------------------ */
+
+@media (max-width: 900px) {
+    .hero { text-align: center; }
+    .hero-subtitle { max-width: 100%; }
+    .mock-stats { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 600px) {
+    .hero { padding: 3rem 1rem 2rem; }
+    .hero-actions { flex-direction: column; width: 100%; }
+    .hero-actions .btn-primary,
+    .hero-actions .btn-ghost { width: 100%; }
+    .mock-bar-row { grid-template-columns: 60px 1fr; }
+}
