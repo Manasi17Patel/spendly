@@ -102,4 +102,66 @@
     </div>
 </section>
 
+<div class="video-modal" id="videoModal" aria-hidden="true" role="dialog" aria-modal="true" aria-label="See how Spendly works">
+    <div class="video-modal-backdrop" data-modal-close></div>
+    <div class="video-modal-dialog">
+        <button type="button" class="video-modal-close" data-modal-close aria-label="Close video">×</button>
+        <div class="video-modal-frame">
+            <iframe id="videoModalIframe"
+                    src=""
+                    data-src="https://www.youtube.com/embed/dQw4w9WgXcQ?rel=0&autoplay=1"
+                    title="See how Spendly works"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowfullscreen></iframe>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+(function () {
+    var modal = document.getElementById('videoModal');
+    if (!modal) return;
+
+    var iframe = document.getElementById('videoModalIframe');
+    var videoSrc = iframe.getAttribute('data-src');
+
+    function open() {
+        if (!iframe.src) {
+            iframe.src = videoSrc;
+        }
+        modal.classList.add('is-open');
+        modal.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function close() {
+        modal.classList.remove('is-open');
+        modal.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+        // Stop playback by clearing the iframe source.
+        iframe.src = '';
+    }
+
+    document.querySelectorAll('.hero-actions a.btn-ghost').forEach(function (link) {
+        link.addEventListener('click', function (e) {
+            e.preventDefault();
+            open();
+        });
+    });
+
+    modal.querySelectorAll('[data-modal-close]').forEach(function (el) {
+        el.addEventListener('click', close);
+    });
+
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && modal.classList.contains('is-open')) {
+            close();
+        }
+    });
+})();
+</script>
 {% endblock %}
