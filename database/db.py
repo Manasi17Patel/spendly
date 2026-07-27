@@ -1,7 +1,6 @@
 import sqlite3
 from werkzeug.security import generate_password_hash
 import os
-from datetime import date
 
 
 def get_db():
@@ -86,5 +85,42 @@ def seed_db():
             ''', expense)
 
         conn.commit()
+    finally:
+        conn.close()
+
+
+def create_user(name, email, password):
+    """Create a new user with the given name, email, and password.
+
+    Args:
+        name (str): User's full name
+        email (str): User's email address (must be unique)
+        password (str): Plain-text password to be hashed
+
+    Returns:
+        int: The newly created user's ID on success
+        None: If the email already exists
+    """
+    conn = get_db()
+    try:
+        # Check if email already exists
+        cursor = conn.execute("SELECT id FROM users WHERE email = ?", (email,))
+        if cursor.fetchone() is not None:
+            return None  # Email already exists
+
+        # Hash the password
+        password_hash = generate_password_hash(password)
+
+        # Insert the new user
+        cursor = conn.execute(
+            "INSERT INTO users (name, email, password_hash) VALUES (?, ?, ?)",
+            (name, email, password_hash)
+        )
+        user_id = cursor.lastrowid
+        conn.commit()
+        return user_id
+    except Exception as e:
+        conn.rollback()
+        raise e
     finally:
         conn.close()
