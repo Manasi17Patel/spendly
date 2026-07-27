@@ -1,7 +1,6 @@
 import sqlite3
-from werkzeug.security import generate_password_hash
+from werkzeug.security import generate_password_hash, check_password_hash
 import os
-from datetime import date
 
 
 def get_db():
@@ -88,3 +87,76 @@ def seed_db():
         conn.commit()
     finally:
         conn.close()
+
+
+def create_user(name, email, password):
+    """Create a new user with the given name, email, and password.
+
+    Args:
+        name (str): User's full name
+        email (str): User's email address (must be unique)
+        password (str): Plain-text password to be hashed
+
+    Returns:
+        int: The newly created user's ID on success
+        None: If the email already exists
+    """
+    conn = get_db()
+    try:
+        # Check if email already exists
+        cursor = conn.execute("SELECT id FROM users WHERE email = ?", (email,))
+        if cursor.fetchone() is not None:
+            return None  # Email already exists
+
+        # Hash the password
+        password_hash = generate_password_hash(password)
+
+        # Insert the new user
+        cursor = conn.execute(
+            "INSERT INTO users (name, email, password_hash) VALUES (?, ?, ?)",
+            (name, email, password_hash)
+        )
+        user_id = cursor.lastrowid
+        conn.commit()
+        return user_id
+    except Exception as e:
+        conn.rollback()
+        raise e
+    finally:
+        conn.close()
+
+
+def get_user_by_email(email):
+    """Get a user record by email address.
+
+    Args:
+        email (str): User's email address
+
+    Returns:
+        dict: User record as a dictionary if found, None otherwise
+    """
+    conn = get_db()
+    try:
+        cursor = conn.execute(
+            "SELECT id, name, email, password_hash, created_at FROM users WHERE email = ?",
+            (email,)
+        )
+        row = cursor.fetchone()
+        if row:
+            return dict(row)
+        return None
+    finally:
+        conn.close()
+
+
+def verify_password(stored_hash, provided_password):
+    """Verify a plain-text password against a stored hash.
+
+    Args:
+        stored_hash (str): The hashed password from the database
+        provided_password (str): The plain-text password to verify
+
+    Returns:
+        bool: True if password matches, False otherwise
+    """
+    return check_password_hash(stored_hash, provided_password)
