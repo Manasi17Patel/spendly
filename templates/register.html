@@ -13,27 +13,37 @@
         </div>
 
         <div class="auth-card">
-            {% if error %}
-            <div class="auth-error">{{ error }}</div>
-            {% endif %}
+            {% with messages = get_flashed_messages(with_categories=true) %}
+              {% if messages %}
+                {% for category, message in messages %}
+                  <div class="alert alert-{{ 'danger' if category == 'error' else 'success' }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+                {% endfor %}
+              {% endif %}
+            {% endwith %}
 
             <form method="POST" action="/register">
                 <div class="form-group">
                     <label for="name">Full name</label>
                     <input type="text" id="name" name="name"
                            class="form-input" placeholder="Manasi Patel"
+                           value="{{ request.form.name if request.method == 'POST' else '' }}"
                            required autofocus>
                 </div>
                 <div class="form-group">
                     <label for="email">Email address</label>
                     <input type="email" id="email" name="email"
                            class="form-input" placeholder="ManasiPatel@example.com"
+                           value="{{ request.form.email if request.method == 'POST' else '' }}"
                            required>
                 </div>
                 <div class="form-group">
                     <label for="password">Password</label>
                     <input type="password" id="password" name="password"
                            class="form-input" placeholder="Min. 8 characters"
+                           value="{{ request.form.password if request.method == 'POST' else '' }}"
                            required>
                 </div>
                 <button type="submit" class="btn-submit">Create account</button>
