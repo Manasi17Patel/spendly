@@ -1,5 +1,5 @@
 import sqlite3
-from werkzeug.security import generate_password_hash
+from werkzeug.security import generate_password_hash, check_password_hash
 import os
 
 
@@ -124,3 +124,39 @@ def create_user(name, email, password):
         raise e
     finally:
         conn.close()
+
+
+def get_user_by_email(email):
+    """Get a user record by email address.
+
+    Args:
+        email (str): User's email address
+
+    Returns:
+        dict: User record as a dictionary if found, None otherwise
+    """
+    conn = get_db()
+    try:
+        cursor = conn.execute(
+            "SELECT id, name, email, password_hash, created_at FROM users WHERE email = ?",
+            (email,)
+        )
+        row = cursor.fetchone()
+        if row:
+            return dict(row)
+        return None
+    finally:
+        conn.close()
+
+
+def verify_password(stored_hash, provided_password):
+    """Verify a plain-text password against a stored hash.
+
+    Args:
+        stored_hash (str): The hashed password from the database
+        provided_password (str): The plain-text password to verify
+
+    Returns:
+        bool: True if password matches, False otherwise
+    """
+    return check_password_hash(stored_hash, provided_password)
