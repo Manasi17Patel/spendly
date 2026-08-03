@@ -7,11 +7,15 @@ from flask import Flask, session
 from database.db import get_db, init_db, create_user
 from werkzeug.security import generate_password_hash
 
-# Override get_db to use an in-memory database for testing
+# Override get_db to use an in-memory database that is shared across connections
 def get_test_db():
-    conn = sqlite3.connect(':memory:')
+    # Use a shared in-memory database so that multiple connections see the same data
+    uri = 'file:memdb1?mode=memory&cache=shared'
+    print(f"DEBUG: Connecting to {uri}")  # DEBUG
+    conn = sqlite3.connect(uri, uri=True)
     conn.row_factory = sqlite3.Row
     conn.execute("PRAGMA foreign_keys = ON")
+    print(f"DEBUG: Connection id: {id(conn)}")  # DEBUG
     return conn
 
 # Monkey-patch the get_db function in the database.db module
@@ -58,7 +62,6 @@ def test_login_logout():
     ), follow_redirects=True)
     assert resp.status_code == 200
     # Should redirect to profile page (or wherever we set)
-    # Check that we are redirected to the profile page by checking for a known string
     assert b'Profile page' in resp.data
     # Alternatively, check that the session has the user_id
     with client.session_transaction() as sess:

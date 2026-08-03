@@ -1,0 +1,331 @@
+/* Profile Page Styles */
+
+/* Single outer wrapper — every section lives inside this. */
+.profile-container {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.profile-header {
+    text-align: center;
+    padding: 3rem 0;
+    margin: 0 -2rem 2rem;
+    background: var(--paper-warm);
+    border-bottom: 1px solid var(--border);
+}
+
+.profile-header h1 {
+    font-family: var(--font-display);
+    font-size: 1.8rem;
+    color: var(--ink);
+    margin-bottom: 0.5rem;
+}
+
+.profile-subtitle {
+    font-size: 1rem;
+    color: var(--ink-muted);
+    margin-bottom: 0;
+}
+
+/* Profile Card */
+.profile-card {
+    display: flex;
+    align-items: center;
+    background: var(--paper-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 2rem;
+    margin-bottom: 2.5rem;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+}
+
+.profile-avatar {
+    width: 80px;
+    height: 80px;
+    background: var(--accent-light);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 2rem;
+    flex-shrink: 0;
+}
+
+.avatar-initials {
+    font-family: var(--font-display);
+    font-size: 2.5rem;
+    font-weight: 600;
+    color: var(--accent);
+}
+
+.profile-info {
+    flex: 1;
+}
+
+.profile-info h2 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.5rem;
+    color: var(--ink);
+}
+
+.profile-info .profile-email {
+    color: var(--ink-soft);
+    font-size: 1rem;
+    margin-bottom: 1rem;
+}
+
+.profile-info .member-since {
+    color: var(--ink-muted);
+    font-size: 0.9rem;
+}
+
+/* Stats Container */
+.stats-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+}
+
+.stat-card {
+    background: var(--paper-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+    text-align: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+}
+
+.stat-icon {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    display: block;
+    color: var(--accent);
+}
+
+.stat-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.stat-label {
+    font-size: 0.8rem;
+    color: var(--ink-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.5rem;
+}
+
+.stat-value {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--ink);
+}
+
+/* Transactions Section */
+.transactions-section,
+.categories-section {
+    margin-bottom: 3rem;
+}
+
+.section-title {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    color: var(--ink);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.table-responsive {
+    overflow-x: auto;
+    margin-bottom: 1.5rem;
+}
+
+.transactions-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    min-width: 600px;
+}
+
+.transactions-table th,
+.transactions-table td {
+    padding: 1.25rem 1.5rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border-soft);
+    font-size: 0.9rem;
+}
+
+.transactions-table th {
+    background: var(--paper-warm);
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--ink-soft);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.transactions-table tr:last-child td {
+    border-bottom: none;
+}
+
+.transactions-table tr:hover td {
+    background-color: var(--paper-warm);
+}
+
+.date {
+    font-family: var(--font-display);
+    font-size: 0.9rem;
+    min-width: 100px;
+}
+
+.description {
+    flex: 1;
+    min-width: 200px;
+    font-size: 0.9rem;
+}
+
+.category-badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    text-transform: capitalize;
+}
+
+.amount {
+    font-family: var(--font-display);
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-align: right;
+    min-width: 100px;
+}
+
+/* Category-specific badge colors */
+.category-badge.food { background: var(--accent-light); color: var(--accent); }
+.category-badge.transport { background: var(--accent-light); color: var(--accent-2); }
+.category-badge.bills { background: var(--accent-light); color: var(--ink-muted); }
+.category-badge.health { background: var(--danger-light); color: var(--danger); }
+.category-badge.entertainment { background: var(--accent-2-light); color: var(--accent-2); }
+.category-badge.shopping { background: var(--paper-warm); color: var(--ink-soft); }
+.category-badge.other { background: var(--border-soft); color: var(--ink-muted); }
+
+/* Categories Section */
+.categories-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+.category-card {
+    background: var(--paper-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.category-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.05);
+}
+
+.category-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.category-name {
+    font-weight: 600;
+    color: var(--ink);
+    font-size: 1rem;
+}
+
+.category-percentage {
+    font-weight: 600;
+    color: var(--accent);
+    background: var(--accent-light);
+    padding: 0.25rem 0.75rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.8rem;
+}
+
+.category-bar-container {
+    height: 8px;
+    background: var(--border-soft);
+    border-radius: 999px;
+    overflow: hidden;
+    margin-bottom: 0.75rem;
+}
+
+.category-bar-track {
+    height: 100%;
+    background: var(--border-soft);
+    width: 100%;
+}
+
+.category-bar-fill {
+    height: 100%;
+    background: var(--accent);
+    width: 0;
+    transition: width 0.8s ease;
+}
+
+.category-amount {
+    display: block;
+    text-align: right;
+    font-weight: 600;
+    color: var(--ink);
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .profile-container { padding: 0 1.5rem; }
+    .profile-header { padding: 2rem 0; }
+
+    .profile-header h1 {
+        font-size: 1.8rem;
+    }
+
+    .profile-card {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .profile-avatar {
+        margin: 0 0 1.5rem 0;
+    }
+
+    .profile-info {
+        text-align: center;
+    }
+
+    .stats-container {
+        grid-template-columns: 1fr;
+    }
+
+    .transactions-table th,
+    .transactions-table td {
+        padding: 1rem;
+        font-size: 0.9rem;
+    }
+
+    .categories-grid {
+        grid-template-columns: 1fr;
+    }
+}

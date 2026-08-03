@@ -7,6 +7,7 @@ def get_db():
     """Open a new database connection with foreign keys enabled and row factory."""
     # Database file is in the project root
     db_path = os.path.join(os.path.dirname(__file__), '..', 'spendly.db')
+    print(f"DEBUG: Connecting to {db_path}")  # DEBUG
     conn = sqlite3.connect(db_path)
     conn.row_factory = sqlite3.Row
     # Enable foreign key constraints
@@ -17,9 +18,10 @@ def get_db():
 def init_db():
     """Create tables if they don't exist."""
     conn = get_db()
+    print(f"DEBUG: init_db using connection {conn}")  # DEBUG
     try:
         # Create users table
-        conn.execute('''
+        cur1 = conn.execute('''
             CREATE TABLE IF NOT EXISTS users (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 name TEXT NOT NULL,
@@ -28,8 +30,9 @@ def init_db():
                 created_at TEXT DEFAULT CURRENT_TIMESTAMP
             )
         ''')
+        print(f"DEBUG: users table created, cursor={cur1}")  # DEBUG
         # Create expenses table
-        conn.execute('''
+        cur2 = conn.execute('''
             CREATE TABLE IF NOT EXISTS expenses (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 user_id INTEGER NOT NULL,
@@ -41,7 +44,9 @@ def init_db():
                 FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
             )
         ''')
+        print(f"DEBUG: expenses table created, cursor={cur2}")  # DEBUG
         conn.commit()
+        print("DEBUG: commit done")  # DEBUG
     finally:
         conn.close()
 
@@ -160,3 +165,26 @@ def verify_password(stored_hash, provided_password):
         bool: True if password matches, False otherwise
     """
     return check_password_hash(stored_hash, provided_password)
+
+
+def get_user_by_id(user_id):
+    """Get a user record by user ID.
+
+    Args:
+        user_id (int): User's ID
+
+    Returns:
+        dict: User record as a dictionary if found, None otherwise
+    """
+    conn = get_db()
+    try:
+        cursor = conn.execute(
+            "SELECT id, name, email, password_hash, created_at FROM users WHERE id = ?",
+            (user_id,)
+        )
+        row = cursor.fetchone()
+        if row:
+            return dict(row)
+        return None
+    finally:
+        conn.close()

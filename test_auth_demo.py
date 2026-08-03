@@ -37,7 +37,7 @@ def test_login_logout_with_demo_user():
     print(f"POST /login valid: status={resp.status_code}, data={resp.data[:200]}")
     assert resp.status_code == 200, f"Expected 200, got {resp.status_code}"
     # Should redirect to profile page
-    assert b'Profile page' in resp.data, f"Expected 'Profile page' in response data: {resp.data[:200]"
+    assert b'Profile page' in resp.data, "Expected 'Profile page' in response data: " + str(resp.data[:200])
     # Check that the user is logged in by checking the session
     with client.session_transaction() as sess:
         assert 'user_id' in sess, "User ID not found in session after login"
@@ -47,7 +47,7 @@ def test_login_logout_with_demo_user():
     print(f"GET /logout: status={resp.status_code}, data={resp.data[:200]}")
     assert resp.status_code == 200, f"Expected 200, got {resp.status_code}"
     # Should redirect to landing page
-    assert b'Welcome' in resp.data, f"Expected 'Welcome' in response data: {resp.data[:200]}"
+    assert b'Welcome' in resp.data, "Expected 'Welcome' in response data: " + str(resp.data[:200])
     # Session should be cleared
     with client.session_transaction() as sess:
         assert 'user_id' not in sess, "User ID still in session after logout"
