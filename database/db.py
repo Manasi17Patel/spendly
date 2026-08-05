@@ -1,4 +1,5 @@
 import sqlite3
+from datetime import date
 from werkzeug.security import generate_password_hash, check_password_hash
 import os
 
